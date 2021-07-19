@@ -1,10 +1,11 @@
 import string
 
-def is_pangram(sentence):
-    alphabet = string.ascii_lowercase
+def is_pangram(sentence: str) -> bool:
 
-    for char in alphabet:
-        if char not in sentence.lower():
+    sentence = sentence.lower()
+
+    for char in string.ascii_lowercase:
+        if char not in sentence:
             return False
 
     return True
