@@ -1,33 +1,30 @@
+import numpy as np
+
 class Matrix:
-    def __init__(self, matrix_string):
-        self.matrix = convert_matrix(matrix_string)
+    def __init__(self, matrix_string: str) -> None:
 
-    def row(self, index):
-        return self.matrix[index-1][:]
+        self.matrix = np.array([
+            [int(character) for character in row.split()]
+            for row in matrix_string.splitlines()
+        ])
 
-    def column(self, index):
-        return self.matrix[:][index - 1]
+    def row(self, row: int) -> list[int]:
+        """
+        Return a certain row of the matrix.
+        """
+        return self.matrix[row - 1,:]
 
-def convert_matrix(matrix_string):
-    matrix = []
-    row = []
-    length = len(matrix_string)
+    def column(self, column: int) -> list[int]:
+        """
+        Return a certain column of the matrix.
+        """
+        return self.matrix[:, column - 1]
 
-    for element in matrix_string:
-        print(f"Element is {element}\n")
-        print(f"Length is {length}\n")
-        if element == '\n':
-            matrix.append(row)
-            row = []
-        elif element == ' ':
-            continue
-        else:
-            row.append(int(element))
+m = Matrix("1 2 3 4\n5 6 7 8\n9 8 7 6")
+print(m.row(3)[0]) # Output: 9
+m.row(3)[0] = 5    
+print(m.row(3)[0]) # Output: 5
 
-    matrix.append(row)
-    return matrix
-
-matrix = Matrix("1 2 3\n 1 2 3\n 3 2 1 \n 2 3 4\n 1 2 3")
-print(matrix.matrix)
-print(matrix.row(2))
-print(matrix.column(3))
+print(m.column(3)[0]) # Output: 3
+m.column(3)[0] = 5
+print(m.column(3)[0]) # Output: 5

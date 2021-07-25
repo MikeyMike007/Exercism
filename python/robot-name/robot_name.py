@@ -6,50 +6,40 @@ class Robot:
 
     # Class attribute - The set robot_names includes all names for all current
     # Robots at a given time. Please note that all Robots have unique names
-    robot_names = set(())
+    robot_names = set()
 
     def __init__(self):
         """
-        Initiates a Robot with a unique name
+        Initiate an instance of the class Robot. Set the name of a Robot
+        instance.
         """
-        # Name the Robot with a unique name
         self.name = self.generate_robot_name()
-        # Save the robot name in the class attribute set robot_names. Just in
-        # order to keep track of all the names of the active robots.
-        Robot.robot_names.add(self.name)
 
     def reset(self):
         """
-        Resets a robots name and gives it a new unique name
+        Reset a robot name. Give the robot a new name.
         """
-        # Remove the current robot_name from the set robot_names
-        Robot.robot_names.remove(self.name)
-
-        # Set a new unique name for the Robot
+        old_name = self.name
         self.name = self.generate_robot_name()
-
-        # Add the new unique name for the Robot to the set of robot_names
-        Robot.robot_names.add(self.name)
+        Robot.robot_names.remove(old_name)
 
     def generate_robot_name(self):
         """
-        Generates a unique name for the robot_names
+        Generate a unique robot name. Return the name.
         """
-        test_name = self.generate_name()
-
         # Generates a name until its unique among all active robots
-        for test_name in Robot.robot_names:
-            test_name = self.generate_name()
+        while True:
+            candidate_name = self.generate_name()
+            if candidate_name not in Robot.robot_names:
+                Robot.robot_names.add(candidate_name)
+                return candidate_name
 
-        return test_name
 
     def generate_name(self):
         """
-        Generates a name according to the predefined format
+        Generate a candidate of a robot name. Return the candidate name.
         """
-        random.seed()
-        name = "".join(
+        return "".join(
             random.choices(string.ascii_uppercase, k=2)
             + random.choices(string.digits, k=3)
         )
-        return name

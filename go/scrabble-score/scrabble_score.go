@@ -2,7 +2,9 @@
 // according to the game rules of Scrabble
 package scrabble
 
-import "strings"
+import (
+	"unicode"
+)
 
 // Using an array instead of map which seems more eficicent
 var pointConverter = []int{
@@ -38,12 +40,12 @@ var pointConverter = []int{
 // Score returns the total points of a certain word according to game rules
 func Score(word string) int {
 	var score int
-	word = strings.ToLower(word)
 
-	// loop that adds the points
-	for i := 0; i < len(word); i++ {
-		score += int(pointConverter[word[i]])
+	// When looping through a string, the w becomes a rune
+	for _, w := range word {
+		// unicode.toLower takes a rune and outputs a rune
+		w := unicode.ToLower(w)
+		score += pointConverter[w]
 	}
-
 	return score
 }
