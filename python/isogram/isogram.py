@@ -10,9 +10,6 @@ def is_isogram(sentence: str) -> bool:
     sentence = ''.join(char for char in sentence.lower()
                        if char in string.ascii_lowercase)
 
-    for i in range(len(sentence) - 1):
-        # Check whether current loop character already has been looped though.
-        # In this case, the sentence is not an isogram.
-        if sentence[i + 1] in sentence[:i + 1]:
-            return False
-    return True
+    # Check if the sentence has unique characters. If not return false otherwise
+    # return true
+    return len(set(sentence)) == len(sentence)
